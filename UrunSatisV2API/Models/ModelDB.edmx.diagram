@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1f5d1dea5190429d86232b8daab4cd6b" Name="Diagram1" ZoomLevel="83">
+        <EntityTypeShape EntityType="Model.Kategori" Width="1.5" PointX="0.75" PointY="3" />
+        <EntityTypeShape EntityType="Model.Sepet" Width="1.5" PointX="5.25" PointY="2.625" />
+        <EntityTypeShape EntityType="Model.Urun" Width="1.5" PointX="3" PointY="2.375" />
+        <EntityTypeShape EntityType="Model.Uye" Width="1.5" PointX="3" PointY="7.5" />
+        <EntityTypeShape EntityType="Model.Yorum" Width="1.5" PointX="8.25" PointY="2.625" />
+        <AssociationConnector Association="Model.FK_Urun_Kategori" />
+        <AssociationConnector Association="Model.FK_Sepet_Urun" />
+        <AssociationConnector Association="Model.FK_Sepet_Uye" />
+        <AssociationConnector Association="Model.FK_Yorum_Urun" />
+        <AssociationConnector Association="Model.FK_Yorum_Uye" />
+        <EntityTypeShape EntityType="Model.Begen" Width="1.5" PointX="0.5" PointY="5.625" />
+        <AssociationConnector Association="Model.FK_Begen_Urun" />
+        <AssociationConnector Association="Model.FK_Begen_Uye" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

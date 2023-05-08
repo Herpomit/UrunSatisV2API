@@ -1,0 +1,478 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Begen">
+          <Key>
+            <PropertyRef Name="begenId" />
+          </Key>
+          <Property Name="begenId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uyeId" Type="int" Nullable="false" />
+          <Property Name="urunId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kategori">
+          <Key>
+            <PropertyRef Name="kategoriId" />
+          </Key>
+          <Property Name="kategoriId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kategoriAdi" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Sepet">
+          <Key>
+            <PropertyRef Name="sepetId" />
+          </Key>
+          <Property Name="sepetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uyeId" Type="int" Nullable="false" />
+          <Property Name="urunId" Type="int" Nullable="false" />
+          <Property Name="Fiyat" Type="int" />
+          <Property Name="Adet" Type="int" />
+        </EntityType>
+        <EntityType Name="Urun">
+          <Key>
+            <PropertyRef Name="urunId" />
+          </Key>
+          <Property Name="urunId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="urunAdi" Type="nvarchar" MaxLength="255" />
+          <Property Name="urunFiyat" Type="int" />
+          <Property Name="urunStok" Type="int" />
+          <Property Name="urunFoto" Type="nvarchar(max)" />
+          <Property Name="urunTarih" Type="nvarchar" MaxLength="50" />
+          <Property Name="kategoriId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Uye">
+          <Key>
+            <PropertyRef Name="uyeId" />
+          </Key>
+          <Property Name="uyeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KullaniciAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sifre" Type="nvarchar" MaxLength="50" />
+          <Property Name="Adsoyad" Type="nvarchar" MaxLength="50" />
+          <Property Name="Foto" Type="nvarchar" MaxLength="50" />
+          <Property Name="uyeAdmin" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Yorum">
+          <Key>
+            <PropertyRef Name="yorumId" />
+          </Key>
+          <Property Name="yorumId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="yorumIcerik" Type="nvarchar(max)" />
+          <Property Name="uyeId" Type="int" Nullable="false" />
+          <Property Name="urunId" Type="int" Nullable="false" />
+          <Property Name="Tarih" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_Begen_Urun">
+          <End Role="Urun" Type="Self.Urun" Multiplicity="1" />
+          <End Role="Begen" Type="Self.Begen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Urun">
+              <PropertyRef Name="urunId" />
+            </Principal>
+            <Dependent Role="Begen">
+              <PropertyRef Name="urunId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Begen_Uye">
+          <End Role="Uye" Type="Self.Uye" Multiplicity="1" />
+          <End Role="Begen" Type="Self.Begen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uye">
+              <PropertyRef Name="uyeId" />
+            </Principal>
+            <Dependent Role="Begen">
+              <PropertyRef Name="uyeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sepet_Urun">
+          <End Role="Urun" Type="Self.Urun" Multiplicity="1" />
+          <End Role="Sepet" Type="Self.Sepet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Urun">
+              <PropertyRef Name="urunId" />
+            </Principal>
+            <Dependent Role="Sepet">
+              <PropertyRef Name="urunId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sepet_Uye">
+          <End Role="Uye" Type="Self.Uye" Multiplicity="1" />
+          <End Role="Sepet" Type="Self.Sepet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uye">
+              <PropertyRef Name="uyeId" />
+            </Principal>
+            <Dependent Role="Sepet">
+              <PropertyRef Name="uyeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Urun_Kategori">
+          <End Role="Kategori" Type="Self.Kategori" Multiplicity="1" />
+          <End Role="Urun" Type="Self.Urun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategori">
+              <PropertyRef Name="kategoriId" />
+            </Principal>
+            <Dependent Role="Urun">
+              <PropertyRef Name="kategoriId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yorum_Urun">
+          <End Role="Urun" Type="Self.Urun" Multiplicity="1" />
+          <End Role="Yorum" Type="Self.Yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Urun">
+              <PropertyRef Name="urunId" />
+            </Principal>
+            <Dependent Role="Yorum">
+              <PropertyRef Name="urunId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yorum_Uye">
+          <End Role="Uye" Type="Self.Uye" Multiplicity="1" />
+          <End Role="Yorum" Type="Self.Yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uye">
+              <PropertyRef Name="uyeId" />
+            </Principal>
+            <Dependent Role="Yorum">
+              <PropertyRef Name="uyeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="Begen" EntityType="Self.Begen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kategori" EntityType="Self.Kategori" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sepet" EntityType="Self.Sepet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Urun" EntityType="Self.Urun" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Uye" EntityType="Self.Uye" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Yorum" EntityType="Self.Yorum" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Begen_Urun" Association="Self.FK_Begen_Urun">
+            <End Role="Urun" EntitySet="Urun" />
+            <End Role="Begen" EntitySet="Begen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Begen_Uye" Association="Self.FK_Begen_Uye">
+            <End Role="Uye" EntitySet="Uye" />
+            <End Role="Begen" EntitySet="Begen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sepet_Urun" Association="Self.FK_Sepet_Urun">
+            <End Role="Urun" EntitySet="Urun" />
+            <End Role="Sepet" EntitySet="Sepet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sepet_Uye" Association="Self.FK_Sepet_Uye">
+            <End Role="Uye" EntitySet="Uye" />
+            <End Role="Sepet" EntitySet="Sepet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Urun_Kategori" Association="Self.FK_Urun_Kategori">
+            <End Role="Kategori" EntitySet="Kategori" />
+            <End Role="Urun" EntitySet="Urun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yorum_Urun" Association="Self.FK_Yorum_Urun">
+            <End Role="Urun" EntitySet="Urun" />
+            <End Role="Yorum" EntitySet="Yorum" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yorum_Uye" Association="Self.FK_Yorum_Uye">
+            <End Role="Uye" EntitySet="Uye" />
+            <End Role="Yorum" EntitySet="Yorum" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="UrunSatisV21Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Kategori" EntityType="Model.Kategori" />
+          <EntitySet Name="Sepet" EntityType="Model.Sepet" />
+          <EntitySet Name="Urun" EntityType="Model.Urun" />
+          <EntitySet Name="Uye" EntityType="Model.Uye" />
+          <EntitySet Name="Yorum" EntityType="Model.Yorum" />
+          <AssociationSet Name="FK_Urun_Kategori" Association="Model.FK_Urun_Kategori">
+            <End Role="Kategori" EntitySet="Kategori" />
+            <End Role="Urun" EntitySet="Urun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sepet_Urun" Association="Model.FK_Sepet_Urun">
+            <End Role="Urun" EntitySet="Urun" />
+            <End Role="Sepet" EntitySet="Sepet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sepet_Uye" Association="Model.FK_Sepet_Uye">
+            <End Role="Uye" EntitySet="Uye" />
+            <End Role="Sepet" EntitySet="Sepet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yorum_Urun" Association="Model.FK_Yorum_Urun">
+            <End Role="Urun" EntitySet="Urun" />
+            <End Role="Yorum" EntitySet="Yorum" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yorum_Uye" Association="Model.FK_Yorum_Uye">
+            <End Role="Uye" EntitySet="Uye" />
+            <End Role="Yorum" EntitySet="Yorum" />
+          </AssociationSet>
+          <EntitySet Name="Begen" EntityType="Model.Begen" />
+          <AssociationSet Name="FK_Begen_Urun" Association="Model.FK_Begen_Urun">
+            <End Role="Urun" EntitySet="Urun" />
+            <End Role="Begen" EntitySet="Begen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Begen_Uye" Association="Model.FK_Begen_Uye">
+            <End Role="Uye" EntitySet="Uye" />
+            <End Role="Begen" EntitySet="Begen" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Kategori">
+          <Key>
+            <PropertyRef Name="kategoriId" />
+          </Key>
+          <Property Name="kategoriId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kategoriAdi" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Urun" Relationship="Model.FK_Urun_Kategori" FromRole="Kategori" ToRole="Urun" />
+        </EntityType>
+        <EntityType Name="Sepet">
+          <Key>
+            <PropertyRef Name="sepetId" />
+          </Key>
+          <Property Name="sepetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uyeId" Type="Int32" Nullable="false" />
+          <Property Name="urunId" Type="Int32" Nullable="false" />
+          <Property Name="Fiyat" Type="Int32" />
+          <Property Name="Adet" Type="Int32" />
+          <NavigationProperty Name="Urun" Relationship="Model.FK_Sepet_Urun" FromRole="Sepet" ToRole="Urun" />
+          <NavigationProperty Name="Uye" Relationship="Model.FK_Sepet_Uye" FromRole="Sepet" ToRole="Uye" />
+        </EntityType>
+        <EntityType Name="Urun">
+          <Key>
+            <PropertyRef Name="urunId" />
+          </Key>
+          <Property Name="urunId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="urunAdi" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="urunFiyat" Type="Int32" />
+          <Property Name="urunStok" Type="Int32" />
+          <Property Name="urunFoto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="urunTarih" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kategoriId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Kategori" Relationship="Model.FK_Urun_Kategori" FromRole="Urun" ToRole="Kategori" />
+          <NavigationProperty Name="Sepet" Relationship="Model.FK_Sepet_Urun" FromRole="Urun" ToRole="Sepet" />
+          <NavigationProperty Name="Yorum" Relationship="Model.FK_Yorum_Urun" FromRole="Urun" ToRole="Yorum" />
+          <NavigationProperty Name="Begen" Relationship="Model.FK_Begen_Urun" FromRole="Urun" ToRole="Begen" />
+        </EntityType>
+        <EntityType Name="Uye">
+          <Key>
+            <PropertyRef Name="uyeId" />
+          </Key>
+          <Property Name="uyeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KullaniciAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Adsoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Foto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="uyeAdmin" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Sepet" Relationship="Model.FK_Sepet_Uye" FromRole="Uye" ToRole="Sepet" />
+          <NavigationProperty Name="Yorum" Relationship="Model.FK_Yorum_Uye" FromRole="Uye" ToRole="Yorum" />
+          <NavigationProperty Name="Begen" Relationship="Model.FK_Begen_Uye" FromRole="Uye" ToRole="Begen" />
+        </EntityType>
+        <EntityType Name="Yorum">
+          <Key>
+            <PropertyRef Name="yorumId" />
+          </Key>
+          <Property Name="yorumId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="yorumIcerik" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="uyeId" Type="Int32" Nullable="false" />
+          <Property Name="urunId" Type="Int32" Nullable="false" />
+          <Property Name="Tarih" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Urun" Relationship="Model.FK_Yorum_Urun" FromRole="Yorum" ToRole="Urun" />
+          <NavigationProperty Name="Uye" Relationship="Model.FK_Yorum_Uye" FromRole="Yorum" ToRole="Uye" />
+        </EntityType>
+        <Association Name="FK_Urun_Kategori">
+          <End Type="Model.Kategori" Role="Kategori" Multiplicity="1" />
+          <End Type="Model.Urun" Role="Urun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategori">
+              <PropertyRef Name="kategoriId" />
+            </Principal>
+            <Dependent Role="Urun">
+              <PropertyRef Name="kategoriId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sepet_Urun">
+          <End Type="Model.Urun" Role="Urun" Multiplicity="1" />
+          <End Type="Model.Sepet" Role="Sepet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Urun">
+              <PropertyRef Name="urunId" />
+            </Principal>
+            <Dependent Role="Sepet">
+              <PropertyRef Name="urunId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sepet_Uye">
+          <End Type="Model.Uye" Role="Uye" Multiplicity="1" />
+          <End Type="Model.Sepet" Role="Sepet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uye">
+              <PropertyRef Name="uyeId" />
+            </Principal>
+            <Dependent Role="Sepet">
+              <PropertyRef Name="uyeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yorum_Urun">
+          <End Type="Model.Urun" Role="Urun" Multiplicity="1" />
+          <End Type="Model.Yorum" Role="Yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Urun">
+              <PropertyRef Name="urunId" />
+            </Principal>
+            <Dependent Role="Yorum">
+              <PropertyRef Name="urunId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yorum_Uye">
+          <End Type="Model.Uye" Role="Uye" Multiplicity="1" />
+          <End Type="Model.Yorum" Role="Yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uye">
+              <PropertyRef Name="uyeId" />
+            </Principal>
+            <Dependent Role="Yorum">
+              <PropertyRef Name="uyeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Begen">
+          <Key>
+            <PropertyRef Name="begenId" />
+          </Key>
+          <Property Name="begenId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uyeId" Type="Int32" Nullable="false" />
+          <Property Name="urunId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Urun" Relationship="Model.FK_Begen_Urun" FromRole="Begen" ToRole="Urun" />
+          <NavigationProperty Name="Uye" Relationship="Model.FK_Begen_Uye" FromRole="Begen" ToRole="Uye" />
+        </EntityType>
+        <Association Name="FK_Begen_Urun">
+          <End Type="Model.Urun" Role="Urun" Multiplicity="1" />
+          <End Type="Model.Begen" Role="Begen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Urun">
+              <PropertyRef Name="urunId" />
+            </Principal>
+            <Dependent Role="Begen">
+              <PropertyRef Name="urunId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Begen_Uye">
+          <End Type="Model.Uye" Role="Uye" Multiplicity="1" />
+          <End Type="Model.Begen" Role="Begen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uye">
+              <PropertyRef Name="uyeId" />
+            </Principal>
+            <Dependent Role="Begen">
+              <PropertyRef Name="uyeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="UrunSatisV21Entities">
+          <EntitySetMapping Name="Kategori">
+            <EntityTypeMapping TypeName="Model.Kategori">
+              <MappingFragment StoreEntitySet="Kategori">
+                <ScalarProperty Name="kategoriAdi" ColumnName="kategoriAdi" />
+                <ScalarProperty Name="kategoriId" ColumnName="kategoriId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sepet">
+            <EntityTypeMapping TypeName="Model.Sepet">
+              <MappingFragment StoreEntitySet="Sepet">
+                <ScalarProperty Name="Adet" ColumnName="Adet" />
+                <ScalarProperty Name="Fiyat" ColumnName="Fiyat" />
+                <ScalarProperty Name="urunId" ColumnName="urunId" />
+                <ScalarProperty Name="uyeId" ColumnName="uyeId" />
+                <ScalarProperty Name="sepetId" ColumnName="sepetId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Urun">
+            <EntityTypeMapping TypeName="Model.Urun">
+              <MappingFragment StoreEntitySet="Urun">
+                <ScalarProperty Name="kategoriId" ColumnName="kategoriId" />
+                <ScalarProperty Name="urunTarih" ColumnName="urunTarih" />
+                <ScalarProperty Name="urunFoto" ColumnName="urunFoto" />
+                <ScalarProperty Name="urunStok" ColumnName="urunStok" />
+                <ScalarProperty Name="urunFiyat" ColumnName="urunFiyat" />
+                <ScalarProperty Name="urunAdi" ColumnName="urunAdi" />
+                <ScalarProperty Name="urunId" ColumnName="urunId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Uye">
+            <EntityTypeMapping TypeName="Model.Uye">
+              <MappingFragment StoreEntitySet="Uye">
+                <ScalarProperty Name="uyeAdmin" ColumnName="uyeAdmin" />
+                <ScalarProperty Name="Foto" ColumnName="Foto" />
+                <ScalarProperty Name="Adsoyad" ColumnName="Adsoyad" />
+                <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="KullaniciAdi" ColumnName="KullaniciAdi" />
+                <ScalarProperty Name="uyeId" ColumnName="uyeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Yorum">
+            <EntityTypeMapping TypeName="Model.Yorum">
+              <MappingFragment StoreEntitySet="Yorum">
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+                <ScalarProperty Name="urunId" ColumnName="urunId" />
+                <ScalarProperty Name="uyeId" ColumnName="uyeId" />
+                <ScalarProperty Name="yorumIcerik" ColumnName="yorumIcerik" />
+                <ScalarProperty Name="yorumId" ColumnName="yorumId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Begen">
+            <EntityTypeMapping TypeName="Model.Begen">
+              <MappingFragment StoreEntitySet="Begen">
+                <ScalarProperty Name="urunId" ColumnName="urunId" />
+                <ScalarProperty Name="uyeId" ColumnName="uyeId" />
+                <ScalarProperty Name="begenId" ColumnName="begenId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
