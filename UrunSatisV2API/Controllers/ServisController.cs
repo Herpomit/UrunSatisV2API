@@ -726,7 +726,7 @@ namespace UrunSatisV2API.Controllers
             db.SaveChanges();
 
             sonuc.islem = true;
-            sonuc.mesaj = "Sepet temizlendi!";
+            sonuc.mesaj = "Beğeniler temizlendi!";
             return sonuc;
         }
         [HttpDelete]
